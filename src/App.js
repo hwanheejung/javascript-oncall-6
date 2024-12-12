@@ -1,12 +1,17 @@
+import Manager from './controllers/Manager.js';
 import Calendar from './models/Calendar.js';
 import InputView from './views/InputView.js';
 
 class App {
-  constructor() {}
   async run() {
+    // initialize calendar
     const [month, startDay] = await InputView.monthAndDay();
-    this.Calendar = new Calendar(month, startDay);
-    this.Calendar.initialize();
+    const calendar = new Calendar(month, startDay);
+    calendar.initialize();
+
+    // manager start working
+    const manager = new Manager(calendar);
+    await manager.start();
   }
 }
 

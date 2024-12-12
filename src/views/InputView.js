@@ -1,12 +1,40 @@
 import { Console } from '@woowacourse/mission-utils';
+import promptUntilValid from '../utils/promptUntilValid.js';
+import { PROMPT } from '../constants/messages.js';
+import {
+  monthAndDayValidator,
+  workersValidator,
+} from '../utils/inputValidator.js';
 
 class InputView {
   static async monthAndDay() {
-    const input = await Console.readLineAsync(
-      '비상 근무를 배정할 월과 시작 요일을 입력하세요> ',
+    return promptUntilValid(
+      (input) => monthAndDayValidator(input),
+      PROMPT.ASK_MONTH_DAY,
     );
-    const [month, startDay] = input.split(',');
-    return [Number(month), startDay];
+  }
+
+  static async workerSchedule() {
+    let weekdayWorkers;
+    let holidayWorkers;
+
+    while (true) {
+      const weekdayInput = await Console.readLineAsync(
+        PROMPT.AKS_WORKERS('평일'),
+      );
+      weekdayWorkers = workersValidator(weekdayInput);
+      if (!weekdayWorkers) continue;
+
+      const holidayInput = await Console.readLineAsync(
+        PROMPT.AKS_WORKERS('휴일'),
+      );
+      holidayWorkers = workersValidator(holidayInput);
+      if (!holidayWorkers) continue;
+
+      break;
+    }
+
+    return { weekdayWorkers, holidayWorkers };
   }
 }
 

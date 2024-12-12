@@ -16,7 +16,7 @@
 - promptUntilValid
 - inputValidator
   - monthAndDayValidator
-  - scheduleValidator: 중복x, 최대 5자, 5~35명
+  - workersValidator: 중복x, 최대 5자, 5~35명
     - weekdayValidator
     - holidayValidator
 
@@ -24,8 +24,8 @@
 
 - Calendar.js
 
-  - {month, endDate, startDay, holidays: {date, name}}
-  - initialize(month, startDay)
+  - [x] {month, endDate, startDay, holidays: {date, name}}
+  - [x] initialize()
 
     - [x] read 'public/holidays.md'
     - [x] parse {month, date, name}
@@ -34,6 +34,8 @@
 
   - getDateInfo(date)
     - {day, holiday}
+  - getMonthInfo()
+    - {month, endDate}
 
 - WorkersSchedule.js
   - {weekdayList, holidayList, yesterdayWorker}
@@ -46,7 +48,8 @@
 
 ### controllers
 
-- setWorker
+- Manager (일할사람 확정하는 역할)
+  - {month, endDate} = Calendar.getMonthInfo()
   - 오늘 날짜 정보 불러오기 {day, isHoliday} = Calendar.getDateInfo(date)
   - 오늘 일할 사람 불러오기 {name} = WorkerSchedule.getWorkerInFront(date)
     - 어제 일한 사람인지 확인
