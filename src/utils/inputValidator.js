@@ -16,26 +16,29 @@ export const monthAndDayValidator = (input) => {
 
 export const workersValidator = (input) => {
   // '준팍,도밥,고니,수아,루루,글로,솔로스타,우코,슬링키,참새,도리'
-  const workers = input.split(',');
+  const workers = input.split(',').map((worker) => worker.trim());
 
+  // 빈 worker 입력됐는지 확인
+  if (workers.filter((worker) => worker === '').length !== 0) {
+    Console.print(ERROR.INVALID_WORKERS_EMPTY);
+    return null;
+  }
   // 개별 worker 1자 이상 5자 이하인지 확인
-  if (
-    workers.filter((worker) => worker.length > 5 || worker.length === 0)
-      .length > 0
-  ) {
-    Console.print(ERROR.INVALID_WORKERS);
+  const lengthRegex = /^[가-힣a-zA-Z]{1,5}$/;
+  if (workers.filter((worker) => !lengthRegex.test(worker)).length > 0) {
+    Console.print(ERROR.INVALID_WORKERS_NAME_LENGTH);
     return null;
   }
 
   // 중복 확인
   if (new Set(workers).size !== workers.length) {
-    Console.print(ERROR.INVALID_WORKERS);
+    Console.print(ERROR.INVALID_WORKERS_DUPLICATE);
     return null;
   }
 
   // 5명 이상, 35명 이하인지 확인
   if (workers.length < 5 || workers.length > 35) {
-    Console.print(ERROR.INVALID_WORKERS);
+    Console.print(ERROR.INVALID_WORKERS_LENGTH);
     return null;
   }
 

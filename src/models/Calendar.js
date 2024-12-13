@@ -1,8 +1,6 @@
 import getDataFromFile from '../utils/getDataFromFile.js';
 
 class Calendar {
-  /** @type {Map<number, string>} */ holidays;
-
   constructor(month, startDay) {
     this.month = month;
     this.startDay = startDay; // 시작 요일

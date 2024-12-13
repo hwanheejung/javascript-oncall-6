@@ -3,13 +3,20 @@ import InputView from '../views/InputView.js';
 
 class Manager {
   constructor(calendar) {
-    this.Calendar = calendar;
-    this.WorkerSchedule;
+    this.month = null;
+    this.calendar = calendar;
+    this.workerSchedule = null;
+    this.lastAssigned = '';
+    this.shouldAssign = {
+      평일: [],
+      휴일: [],
+    };
   }
 
   async start() {
     await this.#setWorkerSchedule();
-    const { month, endDate } = this.Calendar.getMonthInfo();
+    const { month, endDate } = this.calendar.getMonthInfo();
+    this.month = month;
     for (let d = 1; d <= endDate; d++) {
       this.#fixWorkerOnDate(d);
     }
@@ -17,7 +24,7 @@ class Manager {
 
   async #setWorkerSchedule() {
     const list = await InputView.workerSchedule();
-    this.WorkerSchedule = new WorkerSchedule(
+    this.workerSchedule = new WorkerSchedule(
       list.weekdayList,
       list.holidayList,
     );

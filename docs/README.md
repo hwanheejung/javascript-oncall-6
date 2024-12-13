@@ -13,18 +13,16 @@
 
 ### Utils
 
-- promptUntilValid
-- inputValidator
-  - monthAndDayValidator
-  - workersValidator: 중복x, 최대 5자, 5~35명
-    - weekdayValidator
-    - holidayValidator
+- [x] promptUntilValid
+- [x] inputValidator
+  - [x] monthAndDayValidator
+  - [x] workersValidator: 중복x, 최대 5자, 5~35명
 
 ### models
 
 - Calendar.js
 
-  - [x] {month, endDate, startDay, holidays: {date, name}}
+  - [x] {month, endDate, startDay, holidays: [date]}
   - [x] initialize()
 
     - [x] read 'public/holidays.md'
